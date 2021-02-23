@@ -30,3 +30,29 @@ func TestAddSubMul(t *testing.T) {
 	}
 }
 
+func TestDivide(t *testing.T) {
+	tcs := []struct{
+		a, b float64
+		want float64
+		errExpected bool
+	}{
+		{ a: 4, b: 2, want: 2, errExpected: false },
+		{ a: 4, b: 0, want: 999, errExpected: true },
+		{ a: 2, b: 2, want: 1, errExpected: false },
+		{ a: 100, b: 0, want: 999, errExpected: true },
+	}
+	for _, tc := range tcs {
+		got, err := calculator.Divide(tc.a, tc.b)
+		errReceived := (err != nil)
+		if tc.errExpected != errReceived {
+			t.Fatalf("Divide(%f, %f): unexpected error status %v", tc.a, tc.b, err)
+		}
+		if !tc.errExpected && tc.want != got { // only for valid cases
+			t.Errorf("Divide(%f, %f): want %f, got %f", tc.a, tc.b, tc.want, got)
+		}
+	}
+}
+
+func TestSqrt(t *testing.T) {
+	/// ???
+}
